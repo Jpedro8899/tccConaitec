@@ -28,8 +28,8 @@
         </div>
         <div class="content-box">
             <div class="form-box">
-                <h2>Cadastre-se</h2>
-                <form method="POST" action=>
+                <h2>Cadastro</h2>
+                <form method="POST" >
                     <div class = "input-box">
                     <span>Email</span>
                     <input type="text" name="login" id="login" placeholder="bota teu email parceiro">
@@ -67,24 +67,7 @@
             </div>
         </div>
     </div>
-    <script>
-        function Login() {
-    var done = 0;
-    var usuario = document.getElementsByName('login')[0].value;
-    usuario = usuario.toLowerCase();
-    var senha = document.getElementsByName('password')[0].value;
-    seha = senha.toLowerCase();
-  
-    if (usuario == "bcf" && senha == "bcf") {
-      window.location = "mapa.html";
-      done = 1;
-    }
-    if (done == 0) {
-      alert("Dados incorretos, tente novamente");
-  
-    }
-  }
-    </script>
+   
         
 </body>
 </html>
