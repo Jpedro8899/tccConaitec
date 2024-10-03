@@ -1,15 +1,15 @@
 <?php
-    $dbhost = 'Localhost';
+    $dbhost = 'localhost';
     $dbUsername = 'root';
     $dbPassword = 'root';
-    $dbName = 'form-maizar';
+    $dbName = 'formulario-jp';
 
-    $conexao = new mysqli_connect($dbhost, $dbUsername, $dbPassword, $dbUsername);
+    $conexao = new mysqli($dbhost, $dbUsername, $dbPassword, $dbName);
 
-    if($conexao->conect_errno){
-        echo"Erro";
-    }
-    else{
-        echo "Conectado ao Banco de Dados";
-    }
+   // if($conexao->connect_error){
+    //    echo"Erro";
+   // }
+    //else{
+   //     echo "Conectado ao Banco de Dados";
+   // }
 ?>
