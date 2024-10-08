@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,13 +19,14 @@
            justify-content: center;
         
         }
-         .button-entrar{
+         .submitButton{
         appearance: button;
         padding: 5px 10px;
         background-color:  rgb(6, 157, 199);
         border: none;
         color: white;
         text-decoration: none;
+        border-radius : 2px;
 
     }
     </style>
@@ -39,7 +42,7 @@
             <div class="form-box">
                 <h1></h1>
                 <h2>Login</h2>
-                <form method="POST" >
+                <form action= "testLogin.php" method="POST" >
                     <div class = "input-box">
                     <span>Email</span>
                     <input type="text" name="login" id="login" placeholder="Insira seu email" id="email">
@@ -57,7 +60,7 @@
                         <a href="#">Esqueceu a Senha</a>
                     </div>
                         <section>
-                     <a href="mapa.html" class = "button-entrar" type="submit" value="Entrar" id="entrar" name="entrar">Entrar</a>
+                    <input type="submit" class="submitButton">
                     </section>
                     <div class="input-box">
                         <p>Não tem uma conta? <a href="index2.html">Cadastre-se</a></p>

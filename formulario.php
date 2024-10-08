@@ -1,3 +1,26 @@
+<?php
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+include "config.php";
+
+$login = $_POST['login'];
+$senha = $_POST['senha'];
+
+$result = mysqli_query($conexao, "INSERT INTO usuarios (login, senha)
+VALUES('$login', '$senha')");
+
+}
+//if($_SERVER['REQUEST_METHOD'] == 'POST')
+//{
+//    echo($_POST['login']);
+ //   echo "<br>";
+ //   echo($_POST['senha']);
+  //  die();
+//}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -11,13 +34,14 @@
            justify-content: center;
         
         }
-         .button-entrar{
+         .submitButton{
         appearance: button;
         padding: 5px 10px;
         background-color:  rgb(6, 157, 199);
         border: none;
         color: white;
         text-decoration: none;
+        border-radius : 2px;
          }
     </style>
 </head>
@@ -29,7 +53,7 @@
         <div class="content-box">
             <div class="form-box">
                 <h2>Cadastro</h2>
-                <form method="POST" >
+                <form  method="POST" >
                     <div class = "input-box">
                     <span>Email</span>
                     <input type="text" name="login" id="login" placeholder="bota teu email parceiro">
@@ -47,10 +71,10 @@
                        
                     </div>
                     <section>
-                        <a href="index.html" type= "submit" name= "cadastrar" id="cadastrar" value="cadastrar" class = "button-entrar">Cadastrar</a>
+                        <input class= "submitButton" type="submit" value="Cadastrar"/>
                     </section>
                     <div class="input-box">
-                        <p>Já tem uma conta? <a href="index.html">Entre com uma conta já existente</a></p>
+                        <p>Já tem uma conta? <a href="login.html">Entre com uma conta já existente</a></p>
                     </div>
                 </form>
                 <h3 class="h3">Entrar com</h3>

@@ -6,10 +6,10 @@
 
     $conexao = new mysqli($dbhost, $dbUsername, $dbPassword, $dbName);
 
-   // if($conexao->connect_error){
-    //    echo"Erro";
-   // }
-    //else{
-   //     echo "Conectado ao Banco de Dados";
-   // }
+   if($conexao->connect_error){
+       echo"Erro";
+    }
+   else{
+        echo "Conectado ao Banco de Dados";
+   }
 ?>
