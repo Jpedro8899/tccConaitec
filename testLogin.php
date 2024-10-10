@@ -32,13 +32,9 @@ if(!empty($_POST['login']) && !empty($_POST['senha']))
         $_SESSION['login'] = $login;
         $_SESSION['senha'] = $senha;
 
-        header('Location: sistema.php');
+        header('Location: mapa.php');
     }
 
 }
-else{
-    //não acessa o sistema
-    header('Location:login.php');
-    window("Usuário ou senha incorretos");
-}
+
 ?>

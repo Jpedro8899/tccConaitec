@@ -1,3 +1,19 @@
+<?php
+session_start();
+    print_r($_SESSION);
+
+    if(null !== ($_SESSION['login']== true) and null !== ($_SESSION['senha'] == true))
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        header("Location: login.php");
+     
+    }
+    $logado = $_SESSION['mapa.php']
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
