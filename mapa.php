@@ -2,14 +2,13 @@
 session_start();
     print_r($_SESSION);
 
-    if(null !== ($_SESSION['login']== true) and null !== ($_SESSION['senha'] == true))
+    if(!(isset($_SESSION['login'])))
     {
         unset($_SESSION['login']);
-        unset($_SESSION['senha']);
         header("Location: login.php");
      
     }
-    $logado = $_SESSION['mapa.php']
+    $logado = $_SESSION['login'];
 ?>
 
 

@@ -23,16 +23,13 @@ if(!empty($_POST['login']) && !empty($_POST['senha']))
     if(mysqli_num_rows($result)<1)
     {
         unset($_SESSION['login']);
-        unset($_SESSION['senha']);
 
         print("<script>alert('Usuário ou senha incorretos'); window.location='login.php';</script>");
        // header("Location: login.php");
-    }
-    else{
+    } else{
+       
         $_SESSION['login'] = $login;
-        $_SESSION['senha'] = $senha;
-
-        header('Location: mapa.php');
+        header("Location:mapa.php");
     }
 
 }
