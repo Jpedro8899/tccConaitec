@@ -5,9 +5,15 @@ include "config.php";
 
 $login = $_POST['login'];
 $senha = $_POST['senha'];
+$nome = $_POST['nome'];
+$data = $_POST['data'];
+$telefone = $_POST['telefone'];
+$cpf = $_POST['cpf'];
 
-$result = mysqli_query($conexao, "INSERT INTO usuarios (login, senha)
-VALUES('$login', '$senha')");
+
+$result = mysqli_query($conexao, "INSERT INTO usuarios (login, senha, nome, data, telefone, cpf) 
+VALUES('$login', '$senha','$nome', '$data', '$telefone', '$cpf')");
+
 
 }
 //if($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -26,7 +32,7 @@ VALUES('$login', '$senha')");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index2.css">
+    <link rel="stylesheet" href="formulario2.css">
     <title>nog do grau</title>
     <style>
         section{
@@ -54,14 +60,41 @@ VALUES('$login', '$senha')");
             <div class="form-box">
                 <h2>Cadastro</h2>
                 <form  method="POST" >
+
+
+                <div class = "input-box">
+                    <span>Nome completo</span>
+                    <input type="text" name="nome" id="nome" placeholder="Nome completo">
+                    </div>
+
                     <div class = "input-box">
                     <span>Email</span>
-                    <input type="text" name="login" id="login" placeholder="bota teu email parceiro">
+                    <input type="text" name="login" id="login" placeholder="Email">
+                    </div>
+
+                    <div class = "input-box">
+                    <span>Data de nascimento</span>
+                    <input type="date" name="data" id="data" >
+                    </div>
+
+                    <div class = "input-box">
+                    <span>CPF</span>
+                    <input type="text" name="cpf" id="cpf">
+                    </div>
+
+                    <div class = "input-box">
+                    <span>Telefone</span>
+                    <input type="tel" name="telefone" id="telefone" placeholder="(00) 00000-0000" >
                     </div>
 
                     <div  class = "input-box">
                     <span>Senha</span>
-                    <input type="password" name="senha" id="senha"placeholder="senha">
+                    <input type="password" name="senha" id="senha"placeholder="Crie sua senha">
+                    </div>
+
+                    <div  class = "input-box">
+                    <span>Confirmar senha</span>
+                    <input type="password" name="confirma" id="senha"placeholder="Confirme sua senha">
                     </div>
 
                     <div class="remember">
@@ -91,6 +124,12 @@ VALUES('$login', '$senha')");
             </div>
         </div>
     </div>
+    <script>
+        if(value.data === undefined){
+            alert("Preencha a data de nascimento");
+            return false;
+        }
+    </script>
    
         
 </body>
