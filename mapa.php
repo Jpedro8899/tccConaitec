@@ -74,7 +74,7 @@ session_start();
             <i class="bi bi-clouds-fill" id="btn-expandir"></i>
             <ul>
                 <li class="menuzinho ativo">
-                    <a href="">
+                    <a href="mapa.php">
                         <span class="icon"><i class="bi bi-broadcast-pin"></i></span>
                         <p class="text">Monitoramento</p>
                         <span class="txt-link"></span>

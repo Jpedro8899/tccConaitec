@@ -30,7 +30,7 @@ nav.menu-lateral{
     left: 0; 
     overflow: hidden;
     transition: 0.5s;
-    z-index: 2;
+    z-index: 1002;
 }
 
 nav.menu-lateral a{
@@ -40,6 +40,7 @@ nav.menu-lateral a{
 nav.menu-lateral:hover{
     width: 300px;
     backdrop-filter: blur(5px);
+    z-index: 1002
 }
 
 nav.menu-lateral:hover p{
