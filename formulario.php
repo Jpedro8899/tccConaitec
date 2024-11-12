@@ -32,7 +32,7 @@ VALUES('$login', '$senha','$nome', '$data', '$telefone', '$cpf')");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="formulario2.css">
+    <link rel="stylesheet" href="formulario.css">
     <title>nog do grau</title>
     <style>
         section{
@@ -49,6 +49,18 @@ VALUES('$login', '$senha','$nome', '$data', '$telefone', '$cpf')");
         text-decoration: none;
         border-radius : 2px;
          }
+         .content-box .form-box .input-box span{
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: inline-block;
+    color: black;
+    font-weight: 400;
+}
+        div.input-box{
+
+        }
+
+       
     </style>
 </head>
 <body>
@@ -63,37 +75,37 @@ VALUES('$login', '$senha','$nome', '$data', '$telefone', '$cpf')");
 
 
                 <div class = "input-box">
-                    <span>Nome completo</span>
+                <label for="nome">Nome completo</label>
                     <input type="text" name="nome" id="nome" placeholder="Nome completo">
                     </div>
 
                     <div class = "input-box">
-                    <span>Email</span>
+                    <label for="login">Email</label>
                     <input type="text" name="login" id="login" placeholder="Email">
                     </div>
 
                     <div class = "input-box">
-                    <span>Data de nascimento</span>
+                   <label for="data">Data de nascimento</label>
                     <input type="date" name="data" id="data" >
                     </div>
 
                     <div class = "input-box">
-                    <span>CPF</span>
+                    <label for="cpf">CPF</label>
                     <input type="text" name="cpf" id="cpf">
                     </div>
 
                     <div class = "input-box">
-                    <span>Telefone</span>
+                    <label for="telefone">Telefone</label>
                     <input type="tel" name="telefone" id="telefone" placeholder="(00) 00000-0000" >
                     </div>
 
                     <div  class = "input-box">
-                    <span>Senha</span>
+                    <label for="senha">Senha</label>
                     <input type="password" name="senha" id="senha"placeholder="Crie sua senha">
                     </div>
 
                     <div  class = "input-box">
-                    <span>Confirmar senha</span>
+                    <label for="confira">Confirmar senha</label>
                     <input type="password" name="confirma" id="senha"placeholder="Confirme sua senha">
                     </div>
 
@@ -104,10 +116,10 @@ VALUES('$login', '$senha','$nome', '$data', '$telefone', '$cpf')");
                        
                     </div>
                     <section>
-                        <input class= "submitButton" type="submit" value="Cadastrar"/>
+                       <a href="login.php" class="submitButton">Cadastrar</a>
                     </section>
                     <div class="input-box">
-                        <p>Já tem uma conta? <a href="login.html">Entre com uma conta já existente</a></p>
+                        <p>Já tem uma conta? <a href="login.php">Entre com uma conta já existente</a></p>
                     </div>
                 </form>
                 <h3 class="h3">Entrar com</h3>
@@ -125,10 +137,7 @@ VALUES('$login', '$senha','$nome', '$data', '$telefone', '$cpf')");
         </div>
     </div>
     <script>
-        if(value.data === undefined){
-            alert("Preencha a data de nascimento");
-            return false;
-        }
+
     </script>
    
         

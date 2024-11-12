@@ -1,4 +1,5 @@
-#map {height: 700px;
+#map {
+    height: 700px;
     width: 90%;
     position: relative;
     top: 20px;
@@ -101,5 +102,3 @@ ul li.item-menu a .icon > i{
     font-size: 10px;
     margin-left: 1px;
 }
-
-

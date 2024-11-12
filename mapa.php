@@ -27,8 +27,46 @@ session_start();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="mapa.css">
     <title>Monitoramento da Qualidade do Ar</title>
+
+<style>
+    body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: rgb(168, 158, 158) ;
+    }
+
+    #map{
+        width: 100%;
+        height: 500px;
+        border: 1px solid #ccc; 
+        margin-bottom: 20px;  
+     
+
+    }
+   
+
+
+</style>
 </head>
+
+
 <body>
+<button id="add-point-btn" style="width: 200px;  position: absolute;
+    top: 650px;
+    left: 120px;
+    padding: 10px 15px;
+    background-color: #244979;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 1000;  border-radius: 5px; animation">Adicionar Ponto</button>
+    
+
+    
     <div id="map"></div>
 
     <nav class="menu-lateral">
