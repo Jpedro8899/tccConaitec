@@ -90,7 +90,7 @@ session_start();
                 <li class="menuzinho">
                     <a href="grafico.html">
                         <span class="icon"><i class="bi bi-file-earmark-medical"></i></span>
-                        <p class="text">Previs</p>
+                        <p class="text">Previsão</p>
                         <span class="txt-link"></span>
                     </a>
                 </li>
