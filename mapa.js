@@ -28,18 +28,49 @@ map.on('click', function (e) {
 
     // Criar formulário dinamicamente
     var formHTML = `
-        <div id="form-popup" style="position: absolute; top: 10%; left: 10%; background: white; padding: 10px; border: 1px solid #ccc; z-index: 1000;">
-            <h3>Adicionar Local</h3>
-            <form id="location-form">
-                <label for="location-name">Nome do Local:</label><br>
-                <input type="text" id="location-name" name="location-name" required><br><br>
-                
-                <label for="air-quality">Qualidade do Ar:</label><br>
-                <input type="text" id="air-quality" name="air-quality" required><br><br>
-                
-                <button type="button" id="submit-button">Salvar</button>
-            </form>
-        </div>
+      <div id="form-popup" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.5); z-index: 1000;">
+        <h3>Adicionar Local</h3>
+        <form id="location-form">
+            <div class="form-row">
+                <div class="form-item">
+                    <label for="location-name">Nome do Local:</label>
+                    <input type="text" id="location-name" name="location-name" required>
+                </div>
+                <div class="form-item">
+                    <label for="co2">CO2:</label>
+                    <input type="text" id="co2" name="co2">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-item">
+                    <label for="air-quality">Qualidade do Ar:</label>
+                    <input type="text" id="air-quality" name="air-quality" required>
+                </div>
+                <div class="form-item">
+                    <label for="temperature">Temperatura:</label>
+                    <input type="text" id="temperature" name="temperature">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-item">
+                    <label for="humidity">Umidade:</label>
+                    <input type="text" id="humidity" name="humidity">
+                </div>
+                <div class="form-item">
+                    <label for="so2">SO₂:</label>
+                    <input type="text" id="so2" name="so2">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-item">
+                    <label for="nox">NOx:</label>
+                    <input type="text" id="nox" name="nox">
+                </div>
+            </div>
+            <button type="button" id="submit-button">Salvar</button>
+            <button type="button" id="cancel-button">Cancelar</button>
+        </form>
+      </div>
     `;
 
     // Remover formulário antigo, se existir
@@ -57,33 +88,65 @@ map.on('click', function (e) {
         var airQuality = document.getElementById('air-quality').value;
 
         if (name && airQuality) {
-            // Adicionar o marcador no mapa com popup
-            L.marker([latitude, longitude]).addTo(map)
-                .bindPopup(`<b>${name}</b><br>Qualidade do Ar: ${airQuality}`)
-                .openPopup();
+            const newPoint = {
+                coords: [latitude, longitude],
+                location: name,
+                quality: airQuality,
+                co2: document.getElementById('co2').value || "N/A",
+                temperature: document.getElementById('temperature').value || "N/A",
+                humidity: document.getElementById('humidity').value || "N/A",
+                so2: document.getElementById('so2').value || "N/A",
+                nox: document.getElementById('nox').value || "N/A"
+            };
 
-            alert('Ponto adicionado com sucesso!');
+            // Enviar dados ao backend
+            fetch('mapa.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newPoint)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Erro ao salvar o ponto.');
+                }
+            })
+            .then(result => {
+                alert(result);
+                // Adicionar o marcador ao mapa após confirmação
+                L.marker(newPoint.coords).addTo(map)
+                    .bindPopup(`<b>${newPoint.location}</b><br>Qualidade do Ar: ${newPoint.quality}`)
+                    .openPopup();
 
-            // Aqui você pode enviar os dados para o backend via AJAX ou fetch API, se necessário
-            
-            // Remover o formulário após salvar
-            document.getElementById('form-popup').remove();
+                document.getElementById('form-popup').remove();
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Ocorreu um erro ao salvar o ponto.');
+            });
         } else {
-            alert('Por favor, preencha todos os campos.');
+            alert('Por favor, preencha todos os campos obrigatórios.');
         }
+    });
+
+    // Evento para cancelar o formulário
+    document.getElementById('cancel-button').addEventListener('click', function () {
+        document.getElementById('form-popup').remove();
+        addingPoint = false; // Desativar o modo de adicionar ponto
     });
 
     // Desativar o modo de adicionar ponto após capturar o clique
     addingPoint = false;
 });
 
-
 // Função para carregar pontos do arquivo JSON
 fetch('pontos.json')
     .then(response => response.json())
     .then(data => {
         data.points.forEach(point => {
-            // Adiciona um marcador no mapa para cada ponto
             L.marker(point.coords).addTo(map)
                 .bindPopup(`
                     <b>${point.location}</b><br>
@@ -97,3 +160,24 @@ fetch('pontos.json')
         });
     })
     .catch(error => console.error('Erro ao carregar pontos:', error));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
