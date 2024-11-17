@@ -4,7 +4,7 @@
     position: relative;
     top: 20px;
     left: 120px;
-    border-radius: 2px;
+    border-radius: 6px;
     z-index: 1;
 }
 
@@ -102,4 +102,91 @@ ul li.menuzinho a{
 ul li.item-menu a .icon > i{
     font-size: 10px;
     margin-left: 1px;
+}
+
+#form-popup {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    margin-left: 127px;    
+    margin-top: 65px;
+    transform: translateX(-50%);
+    background: #fefefe;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    font-family: 'Arial', sans-serif;
+    width: 300px;
+}
+
+#form-popup h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+#form-popup label {
+    font-size: 0.9em;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#form-popup input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9em;
+    transition: border-color 0.3s;
+}
+
+#form-popup input[type="text"]:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+#form-popup button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#form-popup button:hover {
+    background-color: #0056b3;
+}
+
+#form-popup button:active {
+    background-color: #004085;
+}
+
+#form-popup button:focus {
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.8);
+}
+
+@media (max-width: 480px) {
+    #form-popup {
+        width: 90%;
+        padding: 15px;
+    }
+
+    #form-popup h3 {
+        font-size: 1.2em;
+    }
+
+    #form-popup button {
+        font-size: 0.9em;
+    }
 }

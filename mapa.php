@@ -66,6 +66,15 @@ session_start();
     z-index: 1000;  border-radius: 5px; animation">Adicionar Ponto</button>
     
 
+
+
+<!--adicionar formulario-->
+
+
+
+
+
+
     
     <div id="map"></div>
 
@@ -106,5 +115,6 @@ session_start();
     </nav>
     
     <script src="mapa.js"></script>
+    <script></script>
 </body>
 </html>
