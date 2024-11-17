@@ -9,6 +9,116 @@ session_start();
      
     }
     $logado = $_SESSION['login'];
+
+
+
+
+
+    
+
+// Carregar o arquivo JSON
+$jsonFile = 'pontos.json';
+$jsonData = file_get_contents($jsonFile);
+$data = json_decode($jsonData, true);
+
+// Verificar se a solicitação é POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Receber os dados enviados via POST
+    $input = json_decode(file_get_contents('php://input'), true);
+
+    if (isset($input['coords'], $input['location'], $input['quality'])) {
+      //   Adicionar o novo ponto ao array existente
+        $data['points'][] = $input;
+
+    // Salvar o array atualizado no arquivo JSON
+       if (file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT))) {
+            echo "Ponto adicionado com sucesso!";
+       } else {
+           http_response_code(500);
+           echo "Erro ao salvar o ponto.";
+      }
+    } else {
+       http_response_code(400);
+       echo "Dados inválidos.";
+    }
+}
+
+
+// Carregar o arquivo JSON
+$jsonFile = 'pontos.json';
+$jsonData = file_get_contents($jsonFile);
+$data = json_decode($jsonData, true);
+
+// Verificar se a solicitação é DELETE
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    // Receber os dados enviados via DELETE
+    $input = json_decode(file_get_contents('php://input'), true);
+
+    if (isset($input['coords']) && is_array($input['coords'])) {
+        // Procurar e remover o ponto com as coordenadas fornecidas
+        foreach ($data['points'] as $key => $point) {
+            if ($point['coords'] === $input['coords']) {
+                unset($data['points'][$key]); // Remove o ponto
+                $data['points'] = array_values($data['points']); // Reindexa o array
+                break;
+            }
+        }
+
+        // Salvar o array atualizado no arquivo JSON
+        if (file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT))) {
+            echo "Ponto excluído com sucesso!";
+        } else {
+            http_response_code(500);
+            echo "Erro ao salvar o arquivo JSON.";
+        }
+    } else {
+        http_response_code(400);
+        echo "Dados inválidos.";
+    }
+}
+
+
+
+// Carregar o arquivo JSON
+$jsonFile = 'pontos.json';
+$jsonData = file_get_contents($jsonFile);
+$data = json_decode($jsonData, true);
+
+// Verificar se a solicitação é PUT
+if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    // Receber os dados enviados via PUT
+    $input = json_decode(file_get_contents('php://input'), true);
+
+    if (isset($input['coords']) && isset($input['newData']) && is_array($input['newData'])) {
+        // Procurar o ponto com as coordenadas fornecidas
+        foreach ($data['points'] as $key => $point) {
+            if ($point['coords'] === $input['coords']) {
+                // Atualizar o ponto com os novos dados
+                $data['points'][$key] = array_merge($point, $input['newData']);
+                break;
+            }
+        }
+
+        // Salvar o array atualizado no arquivo JSON
+        if (file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT))) {
+            echo "Ponto atualizado com sucesso!";
+        } else {
+            http_response_code(500);
+            echo "Erro ao salvar o arquivo JSON.";
+        }
+    } else {
+        http_response_code(400);
+        echo "Dados inválidos.";
+    }
+}
+
+
+
+
+
+
+
+
 ?>
 
 
