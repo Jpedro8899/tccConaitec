@@ -9,175 +9,350 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Variável para controlar o modo de adicionar ponto
 let addingPoint = false;
 
-// Evento para ativar o modo de adicionar ponto
+// Botão de adicionar ponto
 document.getElementById('add-point-btn').addEventListener('click', function () {
-    addingPoint = true; // Ativar o modo de adicionar ponto
+    addingPoint = true;
     alert('Clique no mapa para adicionar um ponto.');
 });
 
 // Evento para capturar clique no mapa
 map.on('click', function (e) {
-    if (!addingPoint) {
-        return; // Só funciona se o modo de adicionar estiver ativo
-    }
+    if (!addingPoint) return;
 
-    // Capturar as coordenadas
-    var coords = e.latlng;
-    var latitude = coords.lat;
-    var longitude = coords.lng;
+    const coords = e.latlng;
+    const latitude = coords.lat;
+    const longitude = coords.lng;
 
-    // Criar formulário dinamicamente
-    var formHTML = `
-      <div id="form-popup" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.5); z-index: 1000;">
-        <h3>Adicionar Local</h3>
-        <form id="location-form">
-            <div class="form-row">
-                <div class="form-item">
-                    <label for="location-name">Nome do Local:</label>
-                    <input type="text" id="location-name" name="location-name" required>
+    const formHTML = `
+    <div id="form-popup" style="
+        position: fixed; 
+        top: calc(50% - 40px); 
+        left: calc(50% - 20px); 
+        margin-top: 70px;
+        transform: translate(-50%, -50%); 
+        background-color: #ffffff; 
+        padding: 20px; 
+        border-radius: 8px; 
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); 
+        width: calc(100% - 250px); 
+        max-width: 600px; /* Aumentando a largura para acomodar as colunas */
+        z-index: 1050; 
+        box-sizing: border-box; 
+        font-family: Arial, sans-serif; 
+        color: #333;">
+        <h3 style="
+            font-size: 20px; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            text-align: center; 
+            color: #007bff; 
+            border-bottom: 2px solid #007bff; 
+            padding-bottom: 10px;">
+            Adicionar Novo Ponto
+        </h3>
+        <form id="add-point-form">
+            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <div style="flex: 1; min-width: 45%;">
+                    <label for="location" style="display: block; font-weight: bold; margin-bottom: 5px;">Nome do Local:</label>
+                    <input type="text" id="location" name="location" required style="
+                        width: 100%; 
+                        padding: 10px; 
+                        border: 1px solid #ccc; 
+                        border-radius: 5px; 
+                        box-sizing: border-box;">
                 </div>
-                <div class="form-item">
-                    <label for="co2">CO2:</label>
-                    <input type="text" id="co2" name="co2">
+                <div style="flex: 1; min-width: 45%;">
+                    <label for="quality" style="display: block; font-weight: bold; margin-bottom: 5px;">Qualidade do Ar:</label>
+                    <input type="text" id="quality" name="quality" required style="
+                        width: 100%; 
+                        padding: 10px; 
+                        border: 1px solid #ccc; 
+                        border-radius: 5px; 
+                        box-sizing: border-box;">
+                </div>
+                <div style="flex: 1; min-width: 45%;">
+                    <label for="co2" style="display: block; font-weight: bold; margin-bottom: 5px;">CO2 (ppm):</label>
+                    <input type="text" id="co2" name="co2" style="
+                        width: 100%; 
+                        padding: 10px; 
+                        border: 1px solid #ccc; 
+                        border-radius: 5px; 
+                        box-sizing: border-box;">
+                </div>
+                <div style="flex: 1; min-width: 45%;">
+                    <label for="temperature" style="display: block; font-weight: bold; margin-bottom: 5px;">Temperatura (°C):</label>
+                    <input type="text" id="temperature" name="temperature" style="
+                        width: 100%; 
+                        padding: 10px; 
+                        border: 1px solid #ccc; 
+                        border-radius: 5px; 
+                        box-sizing: border-box;">
+                </div>
+                <div style="flex: 1; min-width: 45%;">
+                    <label for="humidity" style="display: block; font-weight: bold; margin-bottom: 5px;">Umidade (%):</label>
+                    <input type="text" id="humidity" name="humidity" style="
+                        width: 100%; 
+                        padding: 10px; 
+                        border: 1px solid #ccc; 
+                        border-radius: 5px; 
+                        box-sizing: border-box;">
+                </div>
+                <div style="flex: 1; min-width: 45%;">
+                    <label for="so2" style="display: block; font-weight: bold; margin-bottom: 5px;">SO₂ (μg/m³):</label>
+                    <input type="text" id="so2" name="so2" style="
+                        width: 100%; 
+                        padding: 10px; 
+                        border: 1px solid #ccc; 
+                        border-radius: 5px; 
+                        box-sizing: border-box;">
+                </div>
+                <div style="flex: 1; min-width: 45%;">
+                    <label for="nox" style="display: block; font-weight: bold; margin-bottom: 5px;">NOx (μg/m³):</label>
+                    <input type="text" id="nox" name="nox" style="
+                        width: 100%; 
+                        padding: 10px; 
+                        border: 1px solid #ccc; 
+                        border-radius: 5px; 
+                        box-sizing: border-box;">
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-item">
-                    <label for="air-quality">Qualidade do Ar:</label>
-                    <input type="text" id="air-quality" name="air-quality" required>
-                </div>
-                <div class="form-item">
-                    <label for="temperature">Temperatura:</label>
-                    <input type="text" id="temperature" name="temperature">
-                </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button type="button" id="save-point" style="
+                    background-color: #007bff; 
+                    color: white; 
+                    padding: 10px 20px; 
+                    border: none; 
+                    border-radius: 5px; 
+                    font-size: 14px; 
+                    cursor: pointer; 
+                    transition: background-color 0.3s;">
+                    Salvar
+                </button>
+                <button type="button" id="cancel-point" style="
+                    background-color: #dc3545; 
+                    color: white; 
+                    padding: 10px 20px; 
+                    border: none; 
+                    border-radius: 5px; 
+                    font-size: 14px; 
+                    cursor: pointer; 
+                    transition: background-color 0.3s;">
+                    Cancelar
+                </button>
             </div>
-            <div class="form-row">
-                <div class="form-item">
-                    <label for="humidity">Umidade:</label>
-                    <input type="text" id="humidity" name="humidity">
-                </div>
-                <div class="form-item">
-                    <label for="so2">SO₂:</label>
-                    <input type="text" id="so2" name="so2">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-item">
-                    <label for="nox">NOx:</label>
-                    <input type="text" id="nox" name="nox">
-                </div>
-            </div>
-            <button type="button" id="submit-button">Salvar</button>
-            <button type="button" id="cancel-button">Cancelar</button>
         </form>
-      </div>
-    `;
+    </div>
+`;
 
-    // Remover formulário antigo, se existir
-    var oldForm = document.getElementById('form-popup');
-    if (oldForm) {
-        oldForm.remove();
-    }
 
-    // Adicionar formulário na página
     document.body.insertAdjacentHTML('beforeend', formHTML);
 
-    // Evento para salvar os dados
-    document.getElementById('submit-button').addEventListener('click', function () {
-        var name = document.getElementById('location-name').value;
-        var airQuality = document.getElementById('air-quality').value;
+    // Salvar o ponto
+    document.getElementById('save-point').addEventListener('click', function () {
+        const location = document.getElementById('location').value;
+        const quality = document.getElementById('quality').value;
+        const co2 = document.getElementById('co2').value;
+        const temperature = document.getElementById('temperature').value;
+        const humidity = document.getElementById('humidity').value;
+        const so2 = document.getElementById('so2').value;
+        const nox = document.getElementById('nox').value;
 
-        if (name && airQuality) {
+        if (location && quality && co2 && temperature && humidity && so2 && nox) {
             const newPoint = {
                 coords: [latitude, longitude],
-                location: name,
-                quality: airQuality,
-                co2: document.getElementById('co2').value || "N/A",
-                temperature: document.getElementById('temperature').value || "N/A",
-                humidity: document.getElementById('humidity').value || "N/A",
-                so2: document.getElementById('so2').value || "N/A",
-                nox: document.getElementById('nox').value || "N/A"
+                location,
+                quality,
+                co2,
+                temperature,
+                humidity,
+                so2,
+                nox
             };
 
-            // Enviar dados ao backend
-            fetch('mapa.php', {
+            fetch('http://localhost:3000/add', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newPoint)
             })
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Ponto adicionado com sucesso!');
+                    L.marker(newPoint.coords).addTo(map)
+                        .bindPopup(`<b>${newPoint.location}</b><br>Qualidade do Ar: ${newPoint.quality}`);
+                    document.getElementById('form-popup').remove();
                 } else {
-                    throw new Error('Erro ao salvar o ponto.');
+                    alert(`Erro: ${data.message}`);
                 }
             })
-            .then(result => {
-                alert(result);
-                // Adicionar o marcador ao mapa após confirmação
-                L.marker(newPoint.coords).addTo(map)
-                    .bindPopup(`<b>${newPoint.location}</b><br>Qualidade do Ar: ${newPoint.quality}`)
-                    .openPopup();
-
-                document.getElementById('form-popup').remove();
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                alert('Ocorreu um erro ao salvar o ponto.');
-            });
-        } else {
-            alert('Por favor, preencha todos os campos obrigatórios.');
+            .catch(error => console.error('Erro ao adicionar ponto:', error));
         }
     });
 
-    // Evento para cancelar o formulário
-    document.getElementById('cancel-button').addEventListener('click', function () {
+    // Cancelar
+    document.getElementById('cancel-point').addEventListener('click', function () {
         document.getElementById('form-popup').remove();
-        addingPoint = false; // Desativar o modo de adicionar ponto
     });
 
-    // Desativar o modo de adicionar ponto após capturar o clique
     addingPoint = false;
 });
 
-// Função para carregar pontos do arquivo JSON
-fetch('pontos.json')
+// Carregar pontos
+fetch('http://localhost:3000/pontos')
     .then(response => response.json())
     .then(data => {
+        console.log('Pontos carregados:', data);
         data.points.forEach(point => {
-            L.marker(point.coords).addTo(map)
-                .bindPopup(`
-                    <b>${point.location}</b><br>
-                    Qualidade do Ar: ${point.quality}<br>
-                    CO2: ${point.co2}<br>
-                    Temperatura: ${point.temperature}<br>
-                    Umidade: ${point.humidity}<br>
-                    SO2: ${point.so2}<br>
-                    NOx: ${point.nox}
-                `);
-        });
-    })
-    .catch(error => console.error('Erro ao carregar pontos:', error));
+            const marker = L.marker(point.coords).addTo(map);
+            const popupContent = `
+                <b>${point.location}</b><br>
+                Qualidade do Ar: ${point.quality}<br>
+                CO2: ${point.co2}<br>
+                Temperatura: ${point.temperature}<br>
+                Umidade: ${point.humidity}<br>
+                SO2: ${point.so2}<br>
+                NOx: ${point.nox} <br>
+                <div class="botao">
+                    <button class="delete-point" style="background-color: red; color: white; border-radius: 4px; cursor: pointer;">Excluir</button>
+                    <button class="edit-point" style="background-color: green; color: white; border-radius: 4px; cursor: pointer;">Editar</button>
+                </div>
+            `;
+            marker.bindPopup(popupContent);
 
+            // Excluir ponto
+            marker.on('popupopen', function () {
+                const deleteButton = document.querySelector('.delete-point');
+                deleteButton.addEventListener('click', function () {
+                    if (confirm('Deseja excluir este ponto?')) {
+                        fetch('http://localhost:3000/delete', {
+                            method: 'DELETE',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                latitude: point.coords[0],
+                                longitude: point.coords[1]
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Ponto excluído com sucesso!');
+                                map.removeLayer(marker);
+                            } else {
+                                alert(`Erro: ${data.message}`);
+                            }
+                        })
+                        .catch(error => console.error('Erro ao excluir ponto:', error));
+                    }
+                });
 
+const editButton = document.querySelector('.edit-point');
+editButton.replaceWith(editButton.cloneNode(true));
+const newEditButton = document.querySelector('.edit-point');
+                
+// Editar ponto
+newEditButton.addEventListener('click', function () {
+    // Cria o formulário de edição
+    const editFormHTML = `
+        <div id="edit-popup" style="
+                position: fixed; 
+                top: 50%; 
+                left: 50%; 
+                transform: translate(-50%, -50%); 
+                background-color: white; 
+                padding: 20px; 
+                border-radius: 8px; 
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); 
+                width: 400px; 
+                z-index: 1000;">
+                <h3 style="text-align: center;">Editar Ponto</h3>
+                <form id="edit-form">
+                    <label for="latitude">Latitude:</label>
+                    <input type="text" id="latitude" value="${point.coords[0]}" required>
+                    
+                    <label for="longitude">Longitude:</label>
+                    <input type="text" id="longitude" value="${point.coords[1]}" required>
 
+                    <label for="location">Nome do Local:</label>
+                    <input type="text" id="location" value="${point.location}" required>
+                    
+                    <label for="quality">Qualidade do Ar:</label>
+                    <input type="text" id="quality" value="${point.quality}" required>
+                    
+                    <label for="co2">CO2 (ppm):</label>
+                    <input type="text" id="co2" value="${point.co2}" required>
 
+                    <label for="temperature">Temperatura (°C):</label>
+                    <input type="text" id="temperature" value="${point.temperature}" required>
 
+                    <label for="humidity">Umidade (%):</label>
+                    <input type="text" id="humidity" value="${point.humidity}" required>
 
+                    <label for="so2">SO2 (μg/m³):</label>
+                    <input type="text" id="so2" value="${point.so2}" required>
 
+                    <label for="nox">NOx (μg/m³):</label>
+                    <input type="text" id="nox" value="${point.nox}" required>
+                    
+                    <button type="submit">Salvar</button>
+                    <button type="button" id="cancel-edit">Cancelar</button>
+                </form>
+            </div>
+        `;
 
+    document.body.insertAdjacentHTML('beforeend', editFormHTML);
 
+    // Cancelar edição
+    document.getElementById('cancel-edit').addEventListener('click', function () {
+        document.getElementById('edit-popup').remove();
+    });
 
+    // Salvar alterações
+    document.getElementById('edit-form').addEventListener('submit', async function (event) {
+        event.preventDefault();
 
+        const updatedPoint = {
+            latitude: point.coords[0],
+            longitude: point.coords[1],
+            location: document.getElementById('location').value,
+            quality: document.getElementById('quality').value,
+            co2: document.getElementById('co2').value,
+            temperature: document.getElementById('temperature').value,
+            humidity: document.getElementById('humidity').value,
+            so2: document.getElementById('so2').value,
+            nox: document.getElementById('nox').value
+            
+            
+            
+            
+            
+        };
 
+        try {
+            const response = await fetch('http://localhost:3000/edit', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedPoint),
+            });
 
+            const result = await response.json();
+            if (response.ok) {
+                alert('Ponto atualizado com sucesso!');
+                document.getElementById('edit-popup').remove();
+                location.reload();
 
-
-
-
-
-
-
-    
+                // Atualizar conteúdo do popup
+                marker.bindPopup(createPopupContent(updatedPoint)).openPopup();
+            } else {
+                alert(`Erro ao atualizar o ponto: ${result.message}`);
+            }
+        } catch (error) {
+            console.error('Erro ao atualizar ponto:', error);
+        }
+    });
+});
+});
+})
+})
+.catch(error => console.error('Erro ao carregar pontos:', error));

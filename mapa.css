@@ -102,145 +102,30 @@ ul li.menuzinho a{
 ul li.item-menu a .icon > i{
     font-size: 10px;
     margin-left: 1px;
+    
 }
-
-
-
-/* Container do formulário */
+  /* Centralizar o formulário */
 #form-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    width: 90%;
-    max-width: 400px;
-    z-index: 1000;
+    position: fixed; /* Mantém o formulário fixo na tela */
+    top: calc(50% - 40px); /* Centraliza verticalmente com ajuste */
+    left: calc(50% - 20px); /* Centraliza horizontalmente com ajuste */
+    margin-top: 70px;
+    transform: translate(-50%, -50%); /* Ajuste fino para alinhar o centro */
+    background-color: #ffffff; /* Cor de fundo */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra */
+    width: calc(100% - 220px); /* Reduz a largura para evitar sobreposição com o menu */
+    max-width: 400px; /* Limita a largura máxima */
+    z-index: 1005; /* Certifica que está acima de outros elementos */
+    box-sizing: border-box; /* Garante que o padding não afete o tamanho */
 }
-
-/* Título do formulário */
-#form-popup h3 {
-    margin: 0 0 15px;
-    font-size: 20px;
-    color: #333333;
-    text-align: center;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 10px;
-}
-
-/* Itens do formulário */
-#form-popup .form-item {
-    margin-bottom: 15px;
-}
-
-#form-popup label {
-    display: block;
-    font-weight: bold;
-    font-size: 14px;
-    color: #555555;
-    margin-bottom: 5px;
-}
-
-#form-popup input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #dddddd;
-    border-radius: 5px;
-    font-size: 14px;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
-}
-
-#form-popup input:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-/* Botões */
-#form-popup button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 14px;
-    color: #ffffff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 48%;
-    margin-right: 2%;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-#form-popup button:hover {
-    background-color: #0056b3;
-}
-
-#form-popup #cancel-button {
-    background-color: #dc3545;
-    margin-right: 0;
-}
-
-#form-popup #cancel-button:hover {
-    background-color: #c82333;
-}
-
-/* Organização das linhas do formulário */
-#form-popup .form-row {
+   
+.form-actions{
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    flex-direction: row;
+    gap: 10px;
 }
 
-#form-popup .form-item {
-    flex: 0 0 48%;
-    box-sizing: border-box;
-}
 
-/* Estilo de alertas */
-.alert {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 15px 20px;
-    background-color: #007bff;
-    color: #ffffff;
-    border-radius: 5px;
-    font-size: 14px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    animation: fadeInOut 4s ease-in-out forwards;
-}
 
-/* Animação para alertas */
-@keyframes fadeInOut {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -30px);
-    }
-    20%, 80% {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -30px);
-    }
-}
-
-#form-popup{
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 65%;
-    margin-top: 25px;
-    background-color: rgba(0, 0, 0, 0.5);
-  
-}

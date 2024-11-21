@@ -1,4 +1,5 @@
 <?php
+
 session_start();
     print_r($_SESSION);
 
@@ -14,103 +15,7 @@ session_start();
 
 
 
-    
 
-// Carregar o arquivo JSON
-$jsonFile = 'pontos.json';
-$jsonData = file_get_contents($jsonFile);
-$data = json_decode($jsonData, true);
-
-// Verificar se a solicitação é POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Receber os dados enviados via POST
-    $input = json_decode(file_get_contents('php://input'), true);
-
-    if (isset($input['coords'], $input['location'], $input['quality'])) {
-      //   Adicionar o novo ponto ao array existente
-        $data['points'][] = $input;
-
-    // Salvar o array atualizado no arquivo JSON
-       if (file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT))) {
-            echo "Ponto adicionado com sucesso!";
-       } else {
-           http_response_code(500);
-           echo "Erro ao salvar o ponto.";
-      }
-    } else {
-       http_response_code(400);
-       echo "Dados inválidos.";
-    }
-}
-
-
-// Carregar o arquivo JSON
-$jsonFile = 'pontos.json';
-$jsonData = file_get_contents($jsonFile);
-$data = json_decode($jsonData, true);
-
-// Verificar se a solicitação é DELETE
-if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    // Receber os dados enviados via DELETE
-    $input = json_decode(file_get_contents('php://input'), true);
-
-    if (isset($input['coords']) && is_array($input['coords'])) {
-        // Procurar e remover o ponto com as coordenadas fornecidas
-        foreach ($data['points'] as $key => $point) {
-            if ($point['coords'] === $input['coords']) {
-                unset($data['points'][$key]); // Remove o ponto
-                $data['points'] = array_values($data['points']); // Reindexa o array
-                break;
-            }
-        }
-
-        // Salvar o array atualizado no arquivo JSON
-        if (file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT))) {
-            echo "Ponto excluído com sucesso!";
-        } else {
-            http_response_code(500);
-            echo "Erro ao salvar o arquivo JSON.";
-        }
-    } else {
-        http_response_code(400);
-        echo "Dados inválidos.";
-    }
-}
-
-
-
-// Carregar o arquivo JSON
-$jsonFile = 'pontos.json';
-$jsonData = file_get_contents($jsonFile);
-$data = json_decode($jsonData, true);
-
-// Verificar se a solicitação é PUT
-if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-    // Receber os dados enviados via PUT
-    $input = json_decode(file_get_contents('php://input'), true);
-
-    if (isset($input['coords']) && isset($input['newData']) && is_array($input['newData'])) {
-        // Procurar o ponto com as coordenadas fornecidas
-        foreach ($data['points'] as $key => $point) {
-            if ($point['coords'] === $input['coords']) {
-                // Atualizar o ponto com os novos dados
-                $data['points'][$key] = array_merge($point, $input['newData']);
-                break;
-            }
-        }
-
-        // Salvar o array atualizado no arquivo JSON
-        if (file_put_contents($jsonFile, json_encode($data, JSON_PRETTY_PRINT))) {
-            echo "Ponto atualizado com sucesso!";
-        } else {
-            http_response_code(500);
-            echo "Erro ao salvar o arquivo JSON.";
-        }
-    } else {
-        http_response_code(400);
-        echo "Dados inválidos.";
-    }
-}
 
 
 
@@ -156,8 +61,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
      
 
     }
-   
 
+    /* Centralizar o formulário */
+#form-popup {
+    position: fixed; /* Mantém o formulário fixo na tela */
+    top: calc(50% - 40px); /* Centraliza verticalmente com ajuste */
+    left: calc(50% - 20px); /* Centraliza horizontalmente com ajuste */
+    margin-top: 70px;
+    transform: translate(-50%, -50%); /* Ajuste fino para alinhar o centro */
+    background-color: #ffffff; /* Cor de fundo */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra */
+    width: calc(100% - 220px); /* Reduz a largura para evitar sobreposição com o menu */
+    max-width: 400px; /* Limita a largura máxima */
+    z-index: 1005; /* Certifica que está acima de outros elementos */
+    box-sizing: border-box; /* Garante que o padding não afete o tamanho */
+}
+   
+.form-actions{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
 
 </style>
 </head>
@@ -225,6 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     </nav>
     
     <script src="mapa.js"></script>
-    <script></script>
+    <script>
+        
+    </script>
 </body>
 </html>
