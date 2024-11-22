@@ -207,11 +207,11 @@ fetch('http://localhost:3000/pontos')
             const popupContent = `
                 <b>${point.location}</b><br>
                 Qualidade do Ar: ${point.quality}<br>
-                CO2: ${point.co2}<br>
-                Temperatura: ${point.temperature}<br>
-                Umidade: ${point.humidity}<br>
-                SO2: ${point.so2}<br>
-                NOx: ${point.nox} <br>
+                CO2: ${point.co2 +"ppm" }<br>
+                Temperatura: ${point.temperature + " °C"}<br>
+                Umidade: ${point.humidity + "%"}<br>
+                SO2: ${point.so2 + " μg/m³"}<br>
+                NOx: ${point.nox + " μg/m³"} <br>
                 <div class="botao">
                     <button class="delete-point" style="background-color: red; color: white; border-radius: 4px; cursor: pointer;">Excluir</button>
                     <button class="edit-point" style="background-color: green; color: white; border-radius: 4px; cursor: pointer;">Editar</button>
@@ -304,6 +304,7 @@ newEditButton.addEventListener('click', function () {
     // Cancelar edição
     document.getElementById('cancel-edit').addEventListener('click', function () {
         document.getElementById('edit-popup').remove();
+        marker.closePopup();
     });
 
     // Salvar alterações

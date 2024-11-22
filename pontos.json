@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "points": [
     {
       "coords": [
@@ -104,192 +103,162 @@
       "humidity": 60,
       "so2": 0.05,
       "nox": 0.1
+    },
+    {
+      "coords": [
+        -27.0556,
+        -49.5197
+      ],
+      "location": "Centro de Ibirama",
+      "quality": "Bom",
+      "co2": "380 ppm",
+      "temperature": "21°C",
+      "humidity": "68%",
+      "so2": "9 µg/m³",
+      "nox": "20 µg/m³"
+    },
+    {
+      "coords": [
+        -27.0548,
+        -49.5136
+      ],
+      "location": "Prefeitura de Ibirama",
+      "quality": "Moderado",
+      "co2": "390 ppm",
+      "temperature": "22°C",
+      "humidity": "65%",
+      "so2": "10 µg/m³",
+      "nox": "25 µg/m³"
+    },
+    {
+      "coords": [
+        -27.0532,
+        -49.5107
+      ],
+      "location": "Instituto Federal Catarinense - Campus Ibirama",
+      "quality": "Bom",
+      "co2": "370 ppm",
+      "temperature": "20°C",
+      "humidity": "70%",
+      "so2": "8 µg/m³",
+      "nox": "18 µg/m³"
+    },
+    {
+      "coords": [
+        -27.056,
+        -49.5222
+      ],
+      "location": "Escola de Educação Básica Eliseu Guilherme",
+      "quality": "Regular",
+      "co2": "400 ppm",
+      "temperature": "23°C",
+      "humidity": "63%",
+      "so2": "12 µg/m³",
+      "nox": "30 µg/m³"
+    },
+    {
+      "coords": [
+        -27.0488,
+        -49.6235
+      ],
+      "location": "Centro de Presidente Getúlio",
+      "quality": "Moderados",
+      "co2": 420,
+      "temperature": 22,
+      "humidity": 64,
+      "so2": 11,
+      "nox": 28
+    },
+    {
+      "coords": [
+        -27.0477,
+        -49.6245
+      ],
+      "location": "Prefeitura de Presidente Getúlio",
+      "quality": "Bom",
+      "co2": "390 ppm",
+      "temperature": "21°C",
+      "humidity": "66%",
+      "so2": "10 µg/m³",
+      "nox": "22 µg/m³"
+    },
+    {
+      "coords": [
+        -27.0465,
+        -49.6223
+      ],
+      "location": "Escola de Educação Básica Osvaldo Cruz",
+      "quality": "Regular",
+      "co2": "430 ppm",
+      "temperature": "24°C",
+      "humidity": "60%",
+      "so2": "13 µg/m³",
+      "nox": "32 µg/m³"
+    },
+    {
+      "coords": [
+        -27.0482,
+        -49.621
+      ],
+      "location": "Escola de Educação Básica Frederico Rolla",
+      "quality": "Ruim",
+      "co2": "450 ppm",
+      "temperature": "25°C",
+      "humidity": "58%",
+      "so2": "14 µg/m³",
+      "nox": "35 µg/m³"
+    },
+    {
+      "coords": [
+        -27.03668208831732,
+        -49.58092268171573
+      ],
+      "location": "João Pedro",
+      "quality": "boa",
+      "co2": 300,
+      "temperature": 8,
+      "humidity": 8,
+      "so2": 8,
+      "nox": 8
+    },
+    {
+      "coords": [
+        -27.034541447173982,
+        -49.56650111936531
+      ],
+      "location": "João Pedro",
+      "quality": "300",
+      "co2": 300,
+      "temperature": 7,
+      "humidity": 8,
+      "so2": 8,
+      "nox": 17
+    },
+    {
+      "coords": [
+        -26.965173085153726,
+        -49.621478310582944
+      ],
+      "location": "Borracharia",
+      "quality": "as",
+      "co2": "300mg/m^3",
+      "temperature": "as",
+      "humidity": "AS",
+      "so2": "AS",
+      "nox": "sa"
+    },
+    {
+      "coords": [
+        -26.95813496328479,
+        -49.62923228606957
+      ],
+      "location": "casa da Elis",
+      "quality": "bom",
+      "co2": "300mg/m^3",
+      "temperature": "27°C",
+      "humidity": "5%",
+      "so2": "sim",
+      "nox": "não"
     }
   ]
-=======
-    "points": [
-        {
-            "coords": [
-                -27.0556,
-                -49.5197
-            ],
-            "location": "Centro de Ibirama",
-            "quality": "Bom",
-            "co2": "380 ppm",
-            "temperature": "21\u00b0C",
-            "humidity": "68%",
-            "so2": "9 \u00b5g\/m\u00b3",
-            "nox": "20 \u00b5g\/m\u00b3"
-        },
-        {
-            "coords": [
-                -27.0548,
-                -49.5136
-            ],
-            "location": "Prefeitura de Ibirama",
-            "quality": "Moderado",
-            "co2": "390 ppm",
-            "temperature": "22\u00b0C",
-            "humidity": "65%",
-            "so2": "10 \u00b5g\/m\u00b3",
-            "nox": "25 \u00b5g\/m\u00b3"
-        },
-        {
-            "coords": [
-                -27.0532,
-                -49.5107
-            ],
-            "location": "Instituto Federal Catarinense - Campus Ibirama",
-            "quality": "Bom",
-            "co2": "370 ppm",
-            "temperature": "20\u00b0C",
-            "humidity": "70%",
-            "so2": "8 \u00b5g\/m\u00b3",
-            "nox": "18 \u00b5g\/m\u00b3"
-        },
-        {
-            "coords": [
-                -27.056,
-                -49.5222
-            ],
-            "location": "Escola de Educa\u00e7\u00e3o B\u00e1sica Eliseu Guilherme",
-            "quality": "Regular",
-            "co2": "400 ppm",
-            "temperature": "23\u00b0C",
-            "humidity": "63%",
-            "so2": "12 \u00b5g\/m\u00b3",
-            "nox": "30 \u00b5g\/m\u00b3"
-        },
-        {
-            "coords": [
-                -27.0488,
-                -49.6235
-            ],
-            "location": "Centro de Presidente Get\u00falio",
-            "quality": "Moderado",
-            "co2": "420 ppm",
-            "temperature": "22\u00b0C",
-            "humidity": "64%",
-            "so2": "11 \u00b5g\/m\u00b3",
-            "nox": "28 \u00b5g\/m\u00b3"
-        },
-        {
-            "coords": [
-                -27.0477,
-                -49.6245
-            ],
-            "location": "Prefeitura de Presidente Get\u00falio",
-            "quality": "Bom",
-            "co2": "390 ppm",
-            "temperature": "21\u00b0C",
-            "humidity": "66%",
-            "so2": "10 \u00b5g\/m\u00b3",
-            "nox": "22 \u00b5g\/m\u00b3"
-        },
-        {
-            "coords": [
-                -27.0465,
-                -49.6223
-            ],
-            "location": "Escola de Educa\u00e7\u00e3o B\u00e1sica Osvaldo Cruz",
-            "quality": "Regular",
-            "co2": "430 ppm",
-            "temperature": "24\u00b0C",
-            "humidity": "60%",
-            "so2": "13 \u00b5g\/m\u00b3",
-            "nox": "32 \u00b5g\/m\u00b3"
-        },
-        {
-            "coords": [
-                -27.0482,
-                -49.621
-            ],
-            "location": "Escola de Educa\u00e7\u00e3o B\u00e1sica Frederico Rolla",
-            "quality": "Ruim",
-            "co2": "450 ppm",
-            "temperature": "25\u00b0C",
-            "humidity": "58%",
-            "so2": "14 \u00b5g\/m\u00b3",
-            "nox": "35 \u00b5g\/m\u00b3"
-        },
-        {
-            "coords": [
-                -27.05203234877187,
-                -49.59158417726823
-            ],
-            "location": "Jo\u00e3o Pedro",
-            "quality": "as",
-            "co2": "300mg\/m^3",
-            "temperature": "as",
-            "humidity": "AS",
-            "so2": "AS",
-            "nox": "sa"
-        },
-        {
-            "coords": [
-                -27.054111503863478,
-                -49.61182602960947
-            ],
-            "location": "Jo\u00e3o Pedro",
-            "quality": "as",
-            "co2": "300mg\/m^3",
-            "temperature": "as",
-            "humidity": "AS",
-            "so2": "AS",
-            "nox": "sa"
-        },
-        {
-            "coords": [
-                -27.03668208831732,
-                -49.58092268171573
-            ],
-            "location": "Jo\u00e3o Pedro",
-            "quality": "as",
-            "co2": "300mg\/m^3",
-            "temperature": "as",
-            "humidity": "AS",
-            "so2": "AS",
-            "nox": "sa"
-        },
-        {
-            "coords": [
-                -27.034541447173982,
-                -49.56650111936531
-            ],
-            "location": "Jo\u00e3o Pedro",
-            "quality": "as",
-            "co2": "300mg\/m^3",
-            "temperature": "as",
-            "humidity": "AS",
-            "so2": "AS",
-            "nox": "sa"
-        },
-        {
-            "coords": [
-                -26.965173085153726,
-                -49.621478310582944
-            ],
-            "location": "Borracharia",
-            "quality": "as",
-            "co2": "300mg\/m^3",
-            "temperature": "as",
-            "humidity": "AS",
-            "so2": "AS",
-            "nox": "sa"
-        },
-        {
-            "coords": [
-                -26.95813496328479,
-                -49.62923228606957
-            ],
-            "location": "casa da Elis",
-            "quality": "bom",
-            "co2": "300mg\/m^3",
-            "temperature": "27\u00b0C",
-            "humidity": "5%",
-            "so2": "sim",
-            "nox": "n\u00e3o"
-        }
-    ]
->>>>>>> c657e3f9e2233507d199a94002dca75c45e20dcd
 }
