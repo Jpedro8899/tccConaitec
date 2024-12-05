@@ -1,32 +1,14 @@
 <?php
-
 session_start();
-    print_r($_SESSION);
+// print_r($_SESSION); // Remova ou comente esta linha
 
-    if(!(isset($_SESSION['login'])))
-    {
-        unset($_SESSION['login']);
-        header("Location: login.php");
-     
-    }
-    $logado = $_SESSION['login'];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if (!isset($_SESSION['login'])) {
+    unset($_SESSION['login']);
+    header("Location: login.php");
+    exit;
+}
+$logado = $_SESSION['login'];
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -149,10 +131,9 @@ session_start();
             </ul>
         </div>
     </nav>
-    
+
+
+
     <script src="mapa.js"></script>
-    <script>
-        
-    </script>
 </body>
 </html>
