@@ -1,0 +1,78 @@
+Passos para Configuração e Execução
+
+1. Configurar o Banco de Dados
+- Instale o MySQL.
+- Restaure a tabela com o script SQL fornecido.
+
+2. Configurar e Executar o Backend Node.js
+
+Passos:
+1. **Instalar Node.js:
+   - Baixe e instale o Node.js na sua máquina.
+
+2. Clonar o Repositório:
+   - Baixe os arquivos do projeto para o seu ambiente local.
+
+3. Instalar Dependências: 
+   Execute os seguintes comandos no terminal:
+   ```bash
+   npm install -g nodemon
+   npm install csv-parser
+   npm install json2csv
+   npm install express
+   npm install body-parser
+   npm install joi
+   npm install cors
+   ```
+
+4. Configurar as Variáveis de Ambiente:
+   - Crie um arquivo `.env` na raiz do projeto com as seguintes configurações:
+     ```
+     DB_HOST=localhost
+     DB_USER=root
+     DB_PASSWORD=root
+     DB_NAME=formulario-jp
+     PORT=3000
+     ```
+
+5. Executar o Servidor Node.js: 
+   - No terminal, inicie o servidor com:
+     ```bash
+     node server.js
+     ```
+
+3. Configurar e Executar o Servidor PHP
+
+Passos:
+1. Configuração do Banco de Dados no `config.php`:
+   ```php
+   <?php
+   $host = 'localhost';
+   $db = 'formulario-jp';
+   $user = 'root';
+   $password = 'root';
+
+   $conn = new mysqli($host, $user, $password, $db);
+
+   if ($conn->connect_error) {
+       die("Conexão falhou: " . $conn->connect_error);
+   }
+   ?>
+   ```
+
+2. Execução no Apache:
+   - Inicie o Apache no XAMPP.
+   - Certifique-se de que os arquivos PHP estão na pasta do servidor.
+
+3. Acesse o Sistema:
+   - Abra o navegador e acesse: `http://localhost/formulario/login.php`.
+
+---
+
+Acessando as Funcionalidades do Sistema
+
+Agoras a  tabela e o gráfico estão dinâmicos a partir dos pontos adicionados, editados ou excluídos do mapa
+
+2. Foram implementadas validações mais consistentes no crud dos pontos
+
+3. Agora é possível baixar tabelas no formato csv ou xlsx para excel
