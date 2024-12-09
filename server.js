@@ -1,24 +1,116 @@
 const express = require('express');
 const fs = require('fs');
+const cors = require('cors');
+const Joi = require('joi');
+const { Parser } = require('json2csv'); // Importa a biblioteca json2csv
 const app = express();
 const PORT = 3000;
 
 // Middleware para parsear JSON no corpo das requisições
 app.use(express.json());
-// Iniciar o servidor
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
 
+// Middleware para configurar CORS
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', '*');
     next();
-  });
+});
 
-// Caminho para o arquivo JSON
+// Caminhos para os arquivos JSON e CSV
 const jsonFilePath = './pontos.json';
+const csvFilePath = './dados.csv';
+
+// Schema de validação para adicionar pontos
+const addPointSchema = Joi.object({
+    coords: Joi.array().items(
+        Joi.number().required().min(-90).max(90),
+        Joi.number().required().min(-180).max(180)
+    ).length(2),
+    location: Joi.string().required(),
+    quality: Joi.string().valid('Boa', 'Moderada', 'Ruim').required(),
+    co2: Joi.number().optional(),
+    temperature: Joi.number().optional(),
+    humidity: Joi.number().optional(),
+    so2: Joi.number().optional(),
+    nox: Joi.number().optional(),
+});
+
+// Middleware para validação
+function validate(schema) {
+    return (req, res, next) => {
+        const { error } = schema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ success: false, message: error.details[0].message });
+        }
+        next();
+    };
+}
+
+function convertJsonToCsv() {
+    fs.readFile(jsonFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Erro ao ler o arquivo JSON para conversão:', err);
+            return;
+        }
+
+        const jsonData = JSON.parse(data).points;
+
+        // Configurar os campos corretamente e garantir a separação de coordenadas
+        const rows = jsonData.map(point => ({
+            Latitude: point.coords[0],
+            Longitude: point.coords[1],
+            location: point.location,
+            quality: point.quality,
+            co2: point.co2 || '',
+            temperature: point.temperature || '',
+            humidity: point.humidity || '',
+            so2: point.so2 || '',
+            nox: point.nox || '',
+        }));
+
+        const header = [
+            'Latitude',
+            'Longitude',
+            'location',
+            'quality',
+            'co2',
+            'temperature',
+            'humidity',
+            'so2',
+            'nox',
+        ].join(';');
+
+        const csvRows = rows.map(row =>
+            [
+                row.Latitude,
+                row.Longitude,
+                row.location,
+                row.quality,
+                row.co2,
+                row.temperature,
+                row.humidity,
+                row.so2,
+                row.nox,
+            ].join(';')
+        );
+
+        const csvContent = [header, ...csvRows].join('\n');
+
+        fs.writeFile(csvFilePath, csvContent, err => {
+            if (err) {
+                console.error('Erro ao salvar o arquivo CSV:', err);
+            } else {
+                console.log('Arquivo CSV atualizado com sucesso!');
+            }
+        });
+    });
+}
+
+// Iniciar o servidor
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
 
 // Rota para carregar todos os pontos
 app.get('/pontos', (req, res) => {
@@ -33,12 +125,8 @@ app.get('/pontos', (req, res) => {
 });
 
 // Rota para adicionar um novo ponto
-app.post('/add', (req, res) => {
+app.post('/add', validate(addPointSchema), (req, res) => {
     const newPoint = req.body;
-
-    if (!newPoint.coords || !newPoint.location || !newPoint.quality) {
-        return res.status(400).json({ success: false, message: 'Dados incompletos.' });
-    }
 
     fs.readFile(jsonFilePath, 'utf8', (err, data) => {
         if (err) {
@@ -55,14 +143,69 @@ app.post('/add', (req, res) => {
                 return res.status(500).json({ success: false, message: 'Erro ao salvar o arquivo JSON.' });
             }
 
+            // Converte JSON para CSV automaticamente após adicionar o ponto
+            convertJsonToCsv();
+
             return res.json({ success: true, message: 'Ponto adicionado com sucesso.' });
+        });
+    });
+});
+
+// Rota para editar um ponto
+app.put('/edit', (req, res) => {
+    const { latitude, longitude, location, quality, co2, temperature, humidity, so2, nox } = req.body;
+
+    // Validar campos obrigatórios
+    if (!latitude || !longitude) {
+        return res.status(400).json({ success: false, message: 'Latitude e Longitude são obrigatórias.' });
+    }
+
+    fs.readFile(jsonFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Erro ao ler o arquivo JSON:', err);
+            return res.status(500).json({ success: false, message: 'Erro ao ler o arquivo JSON.' });
+        }
+
+        const jsonData = JSON.parse(data);
+
+        // Encontrar o ponto correspondente com base nas coordenadas
+        const pointIndex = jsonData.points.findIndex(
+            (point) => point.coords[0] === latitude && point.coords[1] === longitude
+        );
+
+        if (pointIndex === -1) {
+            return res.status(404).json({ success: false, message: 'Ponto não encontrado.' });
+        }
+
+        // Atualizar os dados do ponto
+        jsonData.points[pointIndex] = {
+            coords: [latitude, longitude],
+            location,
+            quality,
+            co2,
+            temperature,
+            humidity,
+            so2,
+            nox,
+        };
+
+        // Salvar as alterações no arquivo JSON
+        fs.writeFile(jsonFilePath, JSON.stringify(jsonData, null, 2), (err) => {
+            if (err) {
+                console.error('Erro ao salvar o arquivo JSON:', err);
+                return res.status(500).json({ success: false, message: 'Erro ao salvar o arquivo JSON.' });
+            }
+
+            // Atualizar o CSV automaticamente após a edição
+            convertJsonToCsv();
+
+            return res.json({ success: true, message: 'Ponto atualizado com sucesso.' });
         });
     });
 });
 
 // Rota para excluir um ponto
 app.delete('/delete', (req, res) => {
-    console.log("olaaa")
     const { latitude, longitude } = req.body;
 
     if (!latitude || !longitude) {
@@ -75,7 +218,7 @@ app.delete('/delete', (req, res) => {
             return res.status(500).json({ success: false, message: 'Erro ao ler o arquivo JSON.' });
         }
 
-        let jsonData = JSON.parse(data);
+        const jsonData = JSON.parse(data);
 
         // Procurar e remover o ponto correspondente
         const index = jsonData.points.findIndex(
@@ -94,76 +237,10 @@ app.delete('/delete', (req, res) => {
                 return res.status(500).json({ success: false, message: 'Erro ao salvar o arquivo JSON.' });
             }
 
+            // Converte JSON para CSV após excluir o ponto
+            convertJsonToCsv();
+
             return res.json({ success: true, message: 'Ponto excluído com sucesso.' });
-        });
-    });
-});
-
-// Endpoint para editar um ponto
-app.put('/edit', (req, res) => {
-    console.log("olaaa")
-    const { latitude, longitude, location, quality, co2, temperature, humidity, so2, nox } = req.body;
-
-    // Verificação de parâmetros obrigatórios
-    if (!latitude || !longitude || !location || !quality || !co2 || !temperature || !humidity || !so2 || !nox) {
-        return res.status(400).json({ success: false, message: 'Parâmetros insuficientes para editar o ponto.' });
-    }
-
-    // Conversão dos valores para números (caso sejam passados como strings)
-    const co2Num = parseFloat(co2);
-    const temperatureNum = parseFloat(temperature);
-    const humidityNum = parseFloat(humidity);
-    const so2Num = parseFloat(so2);
-    const noxNum = parseFloat(nox);
-
-    // Verificar se a conversão foi bem-sucedida
-    if (isNaN(co2Num) || isNaN(temperatureNum) || isNaN(humidityNum) || isNaN(so2Num) || isNaN(noxNum)) {
-        return res.status(400).json({ success: false, message: 'Valores numéricos inválidos para CO2, temperatura, umidade, SO2 ou NOx.' });
-    }
-
-    fs.readFile(jsonFilePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Erro ao ler o arquivo pontos.json:', err);
-            return res.status(500).json({ success: false, message: 'Erro interno do servidor.' });
-        }
-
-        let pointsData;
-        try {
-            pointsData = JSON.parse(data);
-        } catch (parseErr) {
-            console.error('Erro ao processar o arquivo pontos.json:', parseErr);
-            return res.status(500).json({ success: false, message: 'Erro ao processar os dados do ponto.' });
-        }
-
-        // Encontrar o ponto correspondente
-        const pointIndex = pointsData.points.findIndex(
-            (p) => Math.abs(p.coords[0] - latitude) < 0.0001 && Math.abs(p.coords[1] - longitude) < 0.0001
-        );
-
-        if (pointIndex === -1) {
-            return res.status(404).json({ success: false, message: 'Ponto não encontrado.' });
-        }
-
-        // Atualizar os dados do ponto
-        pointsData.points[pointIndex] = {
-            coords: [latitude, longitude],
-            location,
-            quality,
-            co2: co2Num,
-            temperature: temperatureNum,
-            humidity: humidityNum,
-            so2: so2Num,
-            nox: noxNum,
-        };
-
-        // Salvar no arquivo pontos.json
-        fs.writeFile(jsonFilePath, JSON.stringify(pointsData, null, 2), (writeErr) => {
-            if (writeErr) {
-                console.error('Erro ao salvar o arquivo pontos.json:', writeErr);
-                return res.status(500).json({ success: false, message: 'Erro ao salvar o ponto.' });
-            }
-
-            res.json({ success: true, message: 'Ponto atualizado com sucesso!' });
         });
     });
 });

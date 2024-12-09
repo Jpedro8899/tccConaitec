@@ -12,7 +12,7 @@
     crossorigin="anonymous" 
     referrerpolicy="no-referrer">
 
-    <title>nog das casa noturna</title>
+    <title>Login</title>
     <style>
         section{
            display: flex;
@@ -57,7 +57,6 @@
                         <label>
                             <input type="checkbox"> lembre que sou eu
                         </label>
-                        <a href="#">Esqueceu a Senha</a>
                     </div>
                         <section>
                     <input type="submit" class="submitButton">

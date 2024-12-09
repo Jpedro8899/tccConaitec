@@ -33,7 +33,7 @@ VALUES('$login', '$senha','$nome', '$data', '$telefone', '$cpf')");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="formulario.css">
-    <title>nog do grau</title>
+    <title>Cadastro</title>
     <style>
         section{
            display: flex;
@@ -106,7 +106,7 @@ VALUES('$login', '$senha','$nome', '$data', '$telefone', '$cpf')");
 
                     <div  class = "input-box">
                     <label for="confira">Confirmar senha</label>
-                    <input type="password" name="confirma" id="senha"placeholder="Confirme sua senha">
+                    <input type="password" name="confirma" id="confirma"placeholder="Confirme sua senha">
                     </div>
 
                     <div class="remember">

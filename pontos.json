@@ -2,16 +2,29 @@
   "points": [
     {
       "coords": [
-        -27.039617760239803,
-        -49.60467457167011
+        -27.031605647184048,
+        -49.62323843105302
       ],
       "location": "Ibirama ",
       "quality": "Moderada",
       "co2": "250",
       "temperature": "27",
-      "humidity": "30",
+      "humidity": "25",
       "so2": "10",
       "nox": "12"
+    },
+    {
+      "coords": [
+        -27.0075046981459,
+        -49.56039176907185
+      ],
+      "location": "Teste tcc",
+      "quality": "Boa",
+      "co2": "324",
+      "temperature": "234",
+      "humidity": "234",
+      "so2": "234",
+      "nox": "23"
     }
   ]
 }

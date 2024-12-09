@@ -9,36 +9,104 @@
     <title>Dados de Qualidade do Ar</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <style>
+        /* Estilização para a div.container.mt-5 */
+        
+/* Estilo da tabela */
+#airQualityTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+#airQualityTable th, #airQualityTable td {
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+#airQualityTable th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#airQualityTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#airQualityTable tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* Estilo geral */
+.container {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 38px;
+    color: #444;
+    margin-bottom: 20px;
+
+
+}
+/* Destacar a linha ao passar o mouse */
+#airQualityTable tbody tr:hover {
+    background-color: rgba(200, 230, 255, 0.5); /* Azul claro */
+    cursor: pointer; /* Mostra o cursor como uma mão */
+}
+    </style>
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Dados de Qualidade do Ar</h1>
-        <div class="table-responsive">
-            <table class="table table-striped" id="airQualityTable">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Hora</th>
-                        <th>CO (mg/m^3)</th>
-                        <th>PT08.S1 (CO)</th>
-                        <th>C6H6 (µg/m^3)</th>
-                        <th>PT08.S2 (NMHC)</th>
-                        <th>NOx (ppb)</th>
-                        <th>PT08.S3 (NOx)</th>
-                        <th>NO2 (µg/m^3)</th>
-                        <th>PT08.S4 (NO2)</th>
-                        <th>PT08.S5 (O3)</th>
-                        <th>Temperatura (°C)</th>
-                        <th>Umidade (%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dados carregados via JavaScript -->
-                </tbody>
-            </table>
+        
+    
+        <!-- div para dar espaço -->
+        <div class="mb-4">
+            <div class="filter-container">
+                <label for="qualityFilter">Filtrar por qualidade:</label>
+                <select id="qualityFilter">
+                    <option value="all">Todas</option>
+                    <option value="Boa">Boa</option>
+                    <option value="Moderada">Moderada</option>
+                    <option value="Ruim">Ruim</option>
+                </select>
+            </div>
         </div>
-       
-    </div>
+    
+        <table class="table table-striped" id="airQualityTable">
+            <thead>
+                <tr>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Localização</th>
+                    <th>Qualidade</th>
+                    <th>CO2</th>
+                    <th>Temperatura</th>
+                    <th>Umidade</th>
+                    <th>SO2</th>
+                    <th>NOX</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- puxando do js -->
+            </tbody>
+        </table>
+        <button id="download" style="border-radius: 3px; background-color: rgba(0, 123, 255, 0.5);">Baixar Tabela </button>
+        <button id="downloadExcel" style="border-radius: 3px; background-color: green;">Exportar para Excel</button>
+
+        
 
     <nav class="menu-lateral">
         <div class="btn-expandir">
@@ -77,5 +145,31 @@
     </nav>
 
     <script src="dados.js"></script>
+    <script>document.getElementById('downloadExcel').addEventListener('click', function () {
+    // Selecionar a tabela
+    const table = document.querySelector('#airQualityTable');
+    if (!table) {
+        console.error("Erro: Tabela não encontrada.");
+        return;
+    }
+
+    // Converter a tabela para um array de objetos
+    const rows = table.querySelectorAll('tr');
+    const data = Array.from(rows).map(row => {
+        const cols = row.querySelectorAll('th, td');
+        return Array.from(cols).map(col => col.textContent.trim());
+    });
+
+    // Criar uma planilha (worksheet)
+    const ws = XLSX.utils.aoa_to_sheet(data);
+
+    // Criar um arquivo Excel (workbook)
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Qualidade do Ar');
+
+    // Baixar o arquivo Excel
+    XLSX.writeFile(wb, 'tabela_qualidade_ar.xlsx');
+});
+</script>
 </body>
 </html>

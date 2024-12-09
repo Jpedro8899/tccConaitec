@@ -147,7 +147,6 @@ map.on('click', function (e) {
 
     document.body.insertAdjacentHTML('beforeend', formHTML);
 
-    // Salvar o ponto
     document.getElementById('save-point').addEventListener('click', function () {
         const location = document.getElementById('location').value;
         const quality = document.getElementById('quality').value;
@@ -156,7 +155,7 @@ map.on('click', function (e) {
         const humidity = document.getElementById('humidity').value;
         const so2 = document.getElementById('so2').value;
         const nox = document.getElementById('nox').value;
-
+    
         if (location && quality && co2 && temperature && humidity && so2 && nox) {
             const newPoint = {
                 coords: [latitude, longitude],
@@ -164,11 +163,12 @@ map.on('click', function (e) {
                 quality,
                 co2,
                 temperature,
+                temperature,
                 humidity,
                 so2,
                 nox
             };
-
+    
             fetch('http://localhost:3000/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -178,17 +178,16 @@ map.on('click', function (e) {
             .then(data => {
                 if (data.success) {
                     alert('Ponto adicionado com sucesso!');
-                    L.marker(newPoint.coords).addTo(map)
-                        .bindPopup(`<b>${newPoint.location}</b><br>Qualidade do Ar: ${newPoint.quality}`);
-                    document.getElementById('form-popup').remove();
+                  
                 } else {
                     alert(`Erro: ${data.message}`);
                 }
             })
             .catch(error => console.error('Erro ao adicionar ponto:', error));
+        } else {
+            alert('Preencha todos os campos!');
         }
     });
-
     // Cancelar
     document.getElementById('cancel-point').addEventListener('click', function () {
         document.getElementById('form-popup').remove();
@@ -330,6 +329,7 @@ newEditButton.addEventListener('click', function () {
 
         try {
             const response = await fetch('http://localhost:3000/edit', {
+                mode: no-cors,
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
